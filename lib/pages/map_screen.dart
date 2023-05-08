@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -18,8 +20,10 @@ class MapScreen extends StatefulWidget {
   State<MapScreen> createState() => _MapScreenState();
 }
 
-class _MapScreenState extends State<MapScreen> {
+class _MapScreenState extends State<MapScreen>
+    with SingleTickerProviderStateMixin {
   final _pageController = PageController();
+  late final AnimationController _animationController;
   int _selectedIndex = 0;
 
   List<Marker> _buildMarkers() {
@@ -54,6 +58,25 @@ class _MapScreenState extends State<MapScreen> {
     return _markerList;
   }
 
+  ///==============================================================================
+  ///                     INIITIALIZED ANIMATION LOCATION NOMAD
+  ///============================================================================
+  @override
+  void initState() {
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 777));
+    _animationController.repeat(reverse: true);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  ///===========================================================================
+
   @override
   Widget build(BuildContext context) {
     final _markers = _buildMarkers();
@@ -78,21 +101,27 @@ class _MapScreenState extends State<MapScreen> {
                   'id': MAPBOX_STYLE
                 },
               ),
+              // MARKET SELLERS
               MarkerLayer(
                 markers: _markers,
               ),
+              // MARKET NOMAD
               MarkerLayer(
                 markers: [
                   Marker(
+                      height: 60,
+                      width: 60,
                       point: myPosition,
                       builder: (_) {
-                        return _MyLocationMarker();
+                        return _MyLocationMarker(_animationController);
                       })
                 ],
               )
             ],
           ),
-          // add pageview
+          //=========================================
+          //              CARD SELLERS
+          //=========================================
           Positioned(
             left: 0,
             right: 0,
@@ -134,16 +163,38 @@ class _LocationMarker extends StatelessWidget {
 }
 //===========================================================================
 
-class _MyLocationMarker extends StatelessWidget {
-  const _MyLocationMarker({super.key});
+class _MyLocationMarker extends AnimatedWidget {
+  const _MyLocationMarker(
+    Animation<double> animation, {
+    Key? key,
+  }) : super(key: key, listenable: animation);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      width: 50,
-      decoration:
-          const BoxDecoration(color: MARKER_COLOR, shape: BoxShape.circle),
+    final value = (listenable as Animation<double>).value;
+    final newValue = lerpDouble(0.5, 1, value)!;
+    final size = 50.0;
+    return Center(
+      child: Stack(
+        children: [
+          Center(
+            child: Container(
+              height: size * newValue,
+              width: size * newValue,
+              decoration: BoxDecoration(
+                  color: MARKER_COLOR.withOpacity(0.5), shape: BoxShape.circle),
+            ),
+          ),
+          Center(
+            child: Container(
+              height: 20,
+              width: 20,
+              decoration: const BoxDecoration(
+                  color: MARKER_COLOR, shape: BoxShape.circle),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

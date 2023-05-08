@@ -15,6 +15,10 @@ class Sellers {
   final LatLng location;
   final String enable;
   final String limit;
+  /* Pago == Efectivo, ATM */
+  /* Precio */
+  /* Ordenes === 33 ordenes */
+  /* Completado  === 97% Completado*/
 }
 
 final _locations = [
