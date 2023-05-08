@@ -229,45 +229,67 @@ class _MapItemDetails extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Expanded(
-              child: Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: SizedBox(
-                        height: 120,
-                        width: 120,
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: Image.network(mapMarker.image))),
-                  ),
+            Center(
+              child: Expanded(
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: SizedBox(
+                          height: 120,
+                          width: 120,
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: Image.network(mapMarker.image))),
+                    ),
 
-                  /* Expanded(child: Image.network(mapMarker.image)), */
-                  /* Expanded(child: Image.asset(mapMarker.image)), */
-                  Expanded(
-                      child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        mapMarker.title,
-                        style: _styleTitle,
-                      ),
-                      const SizedBox(height: 10),
-                      Text("Address: " + mapMarker.address,
-                          style: _styleSubtitle),
-                      Row(children: [
-                        Text("Enable: ", style: _styleSubtitle),
-                        Text("\$" + mapMarker.enable, style: _styledPrice),
-                      ]),
-                      Text("Limit: \$" + mapMarker.limit, style: _styleSubtitle)
-                    ],
-                  ))
-                ],
+                    /* Expanded(child: Image.network(mapMarker.image)), */
+                    /* Expanded(child: Image.asset(mapMarker.image)), */
+                    Expanded(
+                        child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          mapMarker.title,
+                          style: _styleTitle,
+                        ),
+                        const SizedBox(height: 10),
+                        Text("Address: " + mapMarker.address,
+                            style: _styleSubtitle),
+                        Row(children: [
+                          Text("Enable: ", style: _styleSubtitle),
+                          Text("\$" + mapMarker.enable, style: _styledPrice),
+                        ]),
+                        Text("Limit: \$" + mapMarker.limit,
+                            style: _styleSubtitle),
+
+                        //-------------- Orders and Complete----------------
+                        Row(
+                          children: [
+                            Text("Orders: " + mapMarker.orders.toString(),
+                                style: _styleSubtitle),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                                "Complete: % " +
+                                    (mapMarker.complete *
+                                            100 /
+                                            mapMarker.orders)
+                                        .toInt()
+                                        .toString(),
+                                style: _styleSubtitle)
+                          ],
+                        )
+                      ],
+                    ))
+                  ],
+                ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(14.0, 0.0, 14.0, 7.0),
+              padding: const EdgeInsets.fromLTRB(14.0, 0.0, 14.0, 7.0),
               child: Material(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(22.0)),
