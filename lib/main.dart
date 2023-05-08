@@ -11,7 +11,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Map demo',
+        title: 'Nomadapp',
         theme: ThemeData(
             useMaterial3: true,
             brightness: Brightness.dark), // or ThemeData.dart()

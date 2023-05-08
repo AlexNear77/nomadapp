@@ -143,7 +143,7 @@ class _MapScreenState extends State<MapScreen>
 }
 
 //=============================================================================
-//                    Animation of the mark when selecting it
+//                              Mark seller
 //============================================================================
 class _LocationMarker extends StatelessWidget {
   const _LocationMarker({super.key, this.selected = false});
@@ -163,6 +163,9 @@ class _LocationMarker extends StatelessWidget {
 }
 //===========================================================================
 
+//=============================================================================
+//                              Mark Nomad
+//============================================================================
 class _MyLocationMarker extends AnimatedWidget {
   const _MyLocationMarker(
     Animation<double> animation, {
@@ -198,6 +201,7 @@ class _MyLocationMarker extends AnimatedWidget {
     );
   }
 }
+//===========================================================================
 
 //==============================================================================
 //                            Card Seller select
@@ -208,9 +212,15 @@ class _MapItemDetails extends StatelessWidget {
   final Sellers mapMarker;
   @override
   Widget build(BuildContext context) {
+    // --------------------------------Styles---------------------------
     final _styleTitle = TextStyle(
         color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold);
     final _styleAddress = TextStyle(color: Colors.grey[800], fontSize: 14);
+    final _styleSubtitle =
+        TextStyle(color: Color.fromARGB(255, 41, 41, 41), fontSize: 17);
+    final _styledPrice =
+        TextStyle(color: Color.fromARGB(255, 35, 231, 58), fontSize: 17);
+    //-------------------------------------------------------------------
     return Padding(
       padding: const EdgeInsets.all(14.0),
       child: Card(
@@ -223,7 +233,7 @@ class _MapItemDetails extends StatelessWidget {
               child: Row(
                 children: [
                   Container(
-                    padding: EdgeInsets.only(left: 10, right: 10),
+                    padding: const EdgeInsets.only(left: 10, right: 10),
                     child: SizedBox(
                         height: 120,
                         width: 120,
@@ -245,23 +255,12 @@ class _MapItemDetails extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       Text("Address: " + mapMarker.address,
-                          style: const TextStyle(
-                              color: Color.fromARGB(255, 41, 41, 41),
-                              fontSize: 17)),
+                          style: _styleSubtitle),
                       Row(children: [
-                        const Text("Enable: ",
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 41, 41, 41),
-                                fontSize: 17)),
-                        Text("\$" + mapMarker.enable,
-                            style: const TextStyle(
-                                color: Color.fromARGB(255, 35, 231, 58),
-                                fontSize: 17)),
+                        Text("Enable: ", style: _styleSubtitle),
+                        Text("\$" + mapMarker.enable, style: _styledPrice),
                       ]),
-                      Text("Limit: \$" + mapMarker.limit,
-                          style: const TextStyle(
-                              color: Color.fromARGB(255, 52, 52, 52),
-                              fontSize: 17))
+                      Text("Limit: \$" + mapMarker.limit, style: _styleSubtitle)
                     ],
                   ))
                 ],
@@ -279,25 +278,14 @@ class _MapItemDetails extends StatelessWidget {
                   minWidth: 200.0,
                   height: 35,
                   color: Colors.black,
-                  child: Text(
+                  child: const Text(
                     "Trade",
-                    style: TextStyle(fontSize: 16, color: Colors.white),
+                    style: TextStyle(fontSize: 17, color: Colors.white),
                   ),
                   onPressed: () {},
                 ),
               ),
             ),
-            /* MaterialButton(
-              padding: EdgeInsets.zero,
-              onPressed: () => null,
-              color: Colors.black,
-              elevation: 6,
-              child: Text(
-                'Trade',
-                style:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-              ),
-            ) */
           ],
         ),
       ),
