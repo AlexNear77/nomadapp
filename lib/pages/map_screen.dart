@@ -126,7 +126,7 @@ class _MapScreenState extends State<MapScreen>
             left: 0,
             right: 0,
             bottom: 21,
-            height: MediaQuery.of(context).size.height * 0.3,
+            height: MediaQuery.of(context).size.height * 0.33,
             child: PageView.builder(
                 controller: _pageController,
                 physics: const NeverScrollableScrollPhysics(),
@@ -255,30 +255,25 @@ class _MapItemDetails extends StatelessWidget {
                           style: _styleTitle,
                         ),
                         const SizedBox(height: 10),
-                        Text("Address: " + mapMarker.address,
+                        Text("Address: ${mapMarker.address}",
                             style: _styleSubtitle),
                         Row(children: [
                           Text("Enable: ", style: _styleSubtitle),
-                          Text("\$" + mapMarker.enable, style: _styledPrice),
+                          Text("\$${mapMarker.enable}", style: _styledPrice),
                         ]),
-                        Text("Limit: \$" + mapMarker.limit,
+                        Text("Limit: \$${mapMarker.limit}",
                             style: _styleSubtitle),
 
                         //-------------- Orders and Complete----------------
                         Row(
                           children: [
-                            Text("Orders: " + mapMarker.orders.toString(),
+                            Text("Orders: ${mapMarker.orders}",
                                 style: _styleSubtitle),
                             const SizedBox(
                               width: 10,
                             ),
                             Text(
-                                "Complete: % " +
-                                    (mapMarker.complete *
-                                            100 /
-                                            mapMarker.orders)
-                                        .toInt()
-                                        .toString(),
+                                "Complete: % ${(mapMarker.complete * 100 / mapMarker.orders).toInt()}",
                                 style: _styleSubtitle)
                           ],
                         )
@@ -304,7 +299,9 @@ class _MapItemDetails extends StatelessWidget {
                     "Trade",
                     style: TextStyle(fontSize: 17, color: Colors.white),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    /* Navigator.push(context, app.PageSeller(mapMarker)) */
+                  },
                 ),
               ),
             ),
